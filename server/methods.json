@@ -1,0 +1,32 @@
+[
+  {
+    "id": 0,
+    "url": "/test",
+    "method": "get",
+    "accept": "text/html"
+  },
+  {
+    "id": 2,
+    "url": "/jkj",
+    "method": "post",
+    "accept": "application/json"
+  },
+  {
+    "id": 3,
+    "url": "/download",
+    "method": "get",
+    "accept": "application/xml"
+  },
+  {
+    "id": 4,
+    "url": "/send",
+    "method": "post",
+    "accept": "text/html"
+  },
+  {
+    "id": 5,
+    "url": "/kjkjk",
+    "method": "post",
+    "accept": "application/xml"
+  }
+]
