@@ -5,7 +5,12 @@ import Request from './Request';
 class RequestList extends React.PureComponent {
     
     static propTypes = {
-        requests: PropTypes.array,
+        requests: PropTypes.array, 
+        cbshowResponse: PropTypes.func.isRequired,
+    }
+
+    showResponse = (responseData) => {
+        this.props.cbshowResponse(responseData);
     }
 
     render() {
@@ -16,11 +21,12 @@ class RequestList extends React.PureComponent {
             url={request.url} 
             method={request.method}
             accept={request.accept}
+            cbshowResponse={this.showResponse}
             />
         );
 
         return(
-            <div>
+            <div style={{width: '100%', float: 'right'}}>
                 <h3>Список сформированных запросов</h3>
                 <ul>
                     {requestsCode}

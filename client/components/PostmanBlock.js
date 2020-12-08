@@ -4,6 +4,7 @@ import isoFetch from 'isomorphic-fetch';
 import RequestBlock from './RequestBlock';
 // import ResponseBlock from '.ResponseBlock';
 import RequestList from './RequestList';
+import ResponseBlock from './ResponseBlock';
 
 
 class PostmanBlock extends React.PureComponent {
@@ -18,6 +19,8 @@ class PostmanBlock extends React.PureComponent {
     state = {
         requestsReady: false,
         requestsResult: [],
+        responseReady: false,
+        responseResult: null,
     };
 
     loadRequests = () => {
@@ -57,6 +60,13 @@ class PostmanBlock extends React.PureComponent {
     requestSent = (data) => {
         console.log(data);
         this.loadRequests();
+    };
+
+    showResponse = (responseData) => {
+        this.setState({
+            responseResult: responseData,
+            responseReady: true
+        })
     }
 
     render() {
@@ -64,13 +74,16 @@ class PostmanBlock extends React.PureComponent {
             return <div>loading...</div>
         };
 
-        let requestListCode = <RequestList requests={this.state.requestsResult} />;
+        let requestListCode = <RequestList requests={this.state.requestsResult} cbshowResponse={this.showResponse} />;
+
+        let responseBlockCode = <ResponseBlock responseResult={this.state.responseResult} />
 
         let requestBlockCode = <RequestBlock cbrequestSent={this.requestSent} />
 
         return (
             <div>
                 {requestBlockCode}
+                {responseBlockCode}
                 {requestListCode}
             </div>
         );

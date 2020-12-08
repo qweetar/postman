@@ -8,7 +8,8 @@ class Request extends React.PureComponent {
         id: PropTypes.number.isRequired,
         url: PropTypes.string.isRequired,
         method: PropTypes.string.isRequired,
-        accept: PropTypes.string.isRequired
+        accept: PropTypes.string.isRequired, 
+        cbshowResponse: PropTypes.func.isRequired,
     };
 
     tryRequest = () => {
@@ -36,7 +37,7 @@ class Request extends React.PureComponent {
 
 
     fetchTryRequestSuccess = (loadedData) => {
-        alert('Ответ на HTTP запрос');
+        this.props.cbshowResponse(loadedData);
     };
 
     fetchError = (errorMessage) => {
@@ -48,10 +49,12 @@ class Request extends React.PureComponent {
     render() {
         return(
             <li>
-                <span>URL запроса: </span>{this.props.url}<br/>
-                <span> HTTP метод: </span>{this.props.method.toUpperCase()}<br/>
+                <span>URL запроса: </span>{this.props.url}
+                <span> HTTP метод: </span>{this.props.method.toUpperCase()}
                 <span> Content-Type: </span>{this.props.accept}<br/>
+                <div>
                 <button onClick={this.tryRequest}>Выполнить запрос</button>
+                </div><br/>
             </li>
         );
     }

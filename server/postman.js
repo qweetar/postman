@@ -4,6 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const cors = require('cors');
+const isoFetch = require('isomorphic-fetch');
 
 webserver.set('views', './views');
 
@@ -15,15 +16,46 @@ webserver.use(cors());
 
 const port = 4095;
 
-webserver.post('/try', function(req, res) {
+webserver.post('/try', async (req, res) => {
     let methods = require('./methods.json');
     let tempMethod = null;
     for (let i = 0; i < methods.length; i++) {
         if (methods[i].id == req.body.id) {
             tempMethod = methods[i];
         };
-    }
-    res.json(tempMethod);
+    };
+
+    webserver.get(tempMethod.url , function(req, res) {
+        res.send(req.body);
+    });
+    
+    webserver.post(tempMethod.url , function(req, res) {
+        res.send(req.body);
+    });
+
+    // const proxy_res = await isoFetch('http://localhost:4095' + tempMethod.url, {
+    const proxy_res = await isoFetch('http://46.101.125.193:4095/' + tempMethod.url, {
+        method: tempMethod.method,
+        headers: {
+            'Content-Type': tempMethod.accept
+        }
+    })
+    .then(response => {
+        if(!response.ok) {
+            throw new Error('fetch error ' + response.status);
+        } else {
+        return response;
+        }
+    })
+    .then (data => {
+        return data;
+    })
+    .catch(error => {
+        console.log(error.message);
+    });
+
+    console.log(proxy_res);
+    res.status(200).send(proxy_res);
 });
 
 webserver.post('/request', function(req, res) {
@@ -52,13 +84,13 @@ function addMethods(newMethod) {
         tempMethod.url = '/' + newMethod.url;
         tempMethod.method = newMethod.method;
         tempMethod.accept = newMethod.accept;
+        tempMethod.body = newMethod.body;
         methods.push(tempMethod);
     };
 
     let data = JSON.stringify(methods, null, 2);
     fs.writeFileSync('./server/methods.json', data);
 }
-
 
 webserver.listen(port, () => {
     console.log('web server running on port ' + port);

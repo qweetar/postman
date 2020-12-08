@@ -5,6 +5,7 @@ import isoFetch from 'isomorphic-fetch';
 class RequestBlock extends React.PureComponent {
 
     static propTypes = {
+        cbrequestSent: PropTypes.func.isRequired,
     };
 
     state = {
@@ -12,6 +13,7 @@ class RequestBlock extends React.PureComponent {
         urlField: null,
         method: null,
         accept: null,
+        body: null,
     };
 
     urlFieldChange = (event) => {
@@ -29,11 +31,16 @@ class RequestBlock extends React.PureComponent {
         this.setState({accept: event.target.value});
     }
 
+    bodyFieldChange = (event) => {
+        this.setState({body: event.target.value});
+    }
+
     sendRequest = () => {
         let req = {
             url: this.state.urlField,
             method: this.state.method,
-            accept: this.state.accept
+            accept: this.state.accept,
+            body: JSON.stringify(this.state.body),
         }
         console.log(req);
         if (this.state.isCardChanged) {
@@ -69,20 +76,20 @@ class RequestBlock extends React.PureComponent {
     render() {
         
         return(
-            <div>
+            <div style={{width: '50%', float: 'left', margin: '0'}}>
                 <h3>{'Блок ввода данных запроса'}</h3>
                 <div>
                     <div>
                         <label>{'URL метода'}</label><br/>
                         <input onChange={this.urlFieldChange}></input>
-                    </div>
+                    </div><br/>
                     <div>
                         <select onChange={this.methodFieldChange}>
                             <option value=''>{'Выберите HTTP метод'}</option>
                             <option value='post'>{'POST'}</option>
                             <option value='get'>{'GET'}</option>
                         </select>
-                    </div>
+                    </div><br/>
                     <div>
                         <select onChange={this.acceptFieldChange}>
                             <option value=''>{'Выберите Accept-type'}</option>
@@ -90,7 +97,11 @@ class RequestBlock extends React.PureComponent {
                             <option value='text/html'>{'text/html'}</option>
                             <option value='application/xml'>{'application/xml'}</option>
                         </select>
-                    </div>
+                    </div><br/>
+                    <div>
+                        <label>Body параметры:</label><br/>
+                        <textarea onChange={this.bodyFieldChange} placeholder='{"name": "John", "surname": "Travolta"}' cols='30' rows='5'></textarea>
+                    </div><br/>
                     <button onClick={this.sendRequest}>{'Отправить'}</button>
                 </div>
             </div>

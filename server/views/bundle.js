@@ -147,6 +147,10 @@ var _RequestList = __webpack_require__(/*! ./RequestList */ "./client/components
 
 var _RequestList2 = _interopRequireDefault(_RequestList);
 
+var _ResponseBlock = __webpack_require__(/*! ./ResponseBlock */ "./client/components/ResponseBlock.js");
+
+var _ResponseBlock2 = _interopRequireDefault(_ResponseBlock);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -167,7 +171,9 @@ var PostmanBlock = function (_React$PureComponent) {
 
         _this.state = {
             requestsReady: false,
-            requestsResult: []
+            requestsResult: [],
+            responseReady: false,
+            responseResult: null
         };
 
         _this.loadRequests = function () {
@@ -206,6 +212,13 @@ var PostmanBlock = function (_React$PureComponent) {
             _this.loadRequests();
         };
 
+        _this.showResponse = function (responseData) {
+            _this.setState({
+                responseResult: responseData,
+                responseReady: true
+            });
+        };
+
         return _this;
     }
 
@@ -225,7 +238,9 @@ var PostmanBlock = function (_React$PureComponent) {
                 );
             };
 
-            var requestListCode = _react2.default.createElement(_RequestList2.default, { requests: this.state.requestsResult });
+            var requestListCode = _react2.default.createElement(_RequestList2.default, { requests: this.state.requestsResult, cbshowResponse: this.showResponse });
+
+            var responseBlockCode = _react2.default.createElement(_ResponseBlock2.default, { responseResult: this.state.responseResult });
 
             var requestBlockCode = _react2.default.createElement(_RequestBlock2.default, { cbrequestSent: this.requestSent });
 
@@ -233,6 +248,7 @@ var PostmanBlock = function (_React$PureComponent) {
                 'div',
                 null,
                 requestBlockCode,
+                responseBlockCode,
                 requestListCode
             );
         }
@@ -316,7 +332,7 @@ var Request = function (_React$PureComponent) {
                 _this.fetchError(error.message);
             });
         }, _this.fetchTryRequestSuccess = function (loadedData) {
-            alert('Ответ на HTTP запрос');
+            _this.props.cbshowResponse(loadedData);
         }, _this.fetchError = function (errorMessage) {
             console.log(errorMessage);
         }, _temp), _possibleConstructorReturn(_this, _ret);
@@ -334,14 +350,12 @@ var Request = function (_React$PureComponent) {
                     'URL \u0437\u0430\u043F\u0440\u043E\u0441\u0430: '
                 ),
                 this.props.url,
-                _react2.default.createElement('br', null),
                 _react2.default.createElement(
                     'span',
                     null,
                     ' HTTP \u043C\u0435\u0442\u043E\u0434: '
                 ),
                 this.props.method.toUpperCase(),
-                _react2.default.createElement('br', null),
                 _react2.default.createElement(
                     'span',
                     null,
@@ -350,10 +364,15 @@ var Request = function (_React$PureComponent) {
                 this.props.accept,
                 _react2.default.createElement('br', null),
                 _react2.default.createElement(
-                    'button',
-                    { onClick: this.tryRequest },
-                    '\u0412\u044B\u043F\u043E\u043B\u043D\u0438\u0442\u044C \u0437\u0430\u043F\u0440\u043E\u0441'
-                )
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.tryRequest },
+                        '\u0412\u044B\u043F\u043E\u043B\u043D\u0438\u0442\u044C \u0437\u0430\u043F\u0440\u043E\u0441'
+                    )
+                ),
+                _react2.default.createElement('br', null)
             );
         }
     }]);
@@ -365,7 +384,8 @@ Request.propTypes = {
     id: _propTypes2.default.number.isRequired,
     url: _propTypes2.default.string.isRequired,
     method: _propTypes2.default.string.isRequired,
-    accept: _propTypes2.default.string.isRequired
+    accept: _propTypes2.default.string.isRequired,
+    cbshowResponse: _propTypes2.default.func.isRequired
 };
 exports.default = Request;
 
@@ -425,7 +445,8 @@ var RequestBlock = function (_React$PureComponent) {
             isCardChanged: false,
             urlField: null,
             method: null,
-            accept: null
+            accept: null,
+            body: null
         }, _this.urlFieldChange = function (event) {
             if (event.target.value != "") {
                 _this.setState({ urlField: event.target.value });
@@ -435,11 +456,14 @@ var RequestBlock = function (_React$PureComponent) {
             _this.setState({ method: event.target.value });
         }, _this.acceptFieldChange = function (event) {
             _this.setState({ accept: event.target.value });
+        }, _this.bodyFieldChange = function (event) {
+            _this.setState({ body: event.target.value });
         }, _this.sendRequest = function () {
             var req = {
                 url: _this.state.urlField,
                 method: _this.state.method,
-                accept: _this.state.accept
+                accept: _this.state.accept,
+                body: JSON.stringify(_this.state.body)
             };
             console.log(req);
             if (_this.state.isCardChanged) {
@@ -472,7 +496,7 @@ var RequestBlock = function (_React$PureComponent) {
 
             return _react2.default.createElement(
                 'div',
-                null,
+                { style: { width: '50%', float: 'left', margin: '0' } },
                 _react2.default.createElement(
                     'h3',
                     null,
@@ -492,6 +516,7 @@ var RequestBlock = function (_React$PureComponent) {
                         _react2.default.createElement('br', null),
                         _react2.default.createElement('input', { onChange: this.urlFieldChange })
                     ),
+                    _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'div',
                         null,
@@ -515,6 +540,7 @@ var RequestBlock = function (_React$PureComponent) {
                             )
                         )
                     ),
+                    _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'div',
                         null,
@@ -543,6 +569,19 @@ var RequestBlock = function (_React$PureComponent) {
                             )
                         )
                     ),
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement(
+                        'div',
+                        null,
+                        _react2.default.createElement(
+                            'label',
+                            null,
+                            'Body \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B:'
+                        ),
+                        _react2.default.createElement('br', null),
+                        _react2.default.createElement('textarea', { onChange: this.bodyFieldChange, placeholder: '{"name": "John", "surname": "Travolta"}', cols: '30', rows: '5' })
+                    ),
+                    _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'button',
                         { onClick: this.sendRequest },
@@ -556,7 +595,9 @@ var RequestBlock = function (_React$PureComponent) {
     return RequestBlock;
 }(_react2.default.PureComponent);
 
-RequestBlock.propTypes = {};
+RequestBlock.propTypes = {
+    cbrequestSent: _propTypes2.default.func.isRequired
+};
 exports.default = RequestBlock;
 
 /***/ }),
@@ -601,27 +642,40 @@ var RequestList = function (_React$PureComponent) {
     _inherits(RequestList, _React$PureComponent);
 
     function RequestList() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
         _classCallCheck(this, RequestList);
 
-        return _possibleConstructorReturn(this, (RequestList.__proto__ || Object.getPrototypeOf(RequestList)).apply(this, arguments));
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = RequestList.__proto__ || Object.getPrototypeOf(RequestList)).call.apply(_ref, [this].concat(args))), _this), _this.showResponse = function (responseData) {
+            _this.props.cbshowResponse(responseData);
+        }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(RequestList, [{
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             var requestsCode = this.props.requests.map(function (request) {
                 return _react2.default.createElement(_Request2.default, {
                     key: request.id,
                     id: request.id,
                     url: request.url,
                     method: request.method,
-                    accept: request.accept
+                    accept: request.accept,
+                    cbshowResponse: _this2.showResponse
                 });
             });
 
             return _react2.default.createElement(
                 'div',
-                null,
+                { style: { width: '100%', float: 'right' } },
                 _react2.default.createElement(
                     'h3',
                     null,
@@ -640,9 +694,93 @@ var RequestList = function (_React$PureComponent) {
 }(_react2.default.PureComponent);
 
 RequestList.propTypes = {
-    requests: _propTypes2.default.array
+    requests: _propTypes2.default.array,
+    cbshowResponse: _propTypes2.default.func.isRequired
 };
 exports.default = RequestList;
+
+/***/ }),
+
+/***/ "./client/components/ResponseBlock.js":
+/*!********************************************!*\
+  !*** ./client/components/ResponseBlock.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ResponseBlock = function (_React$PureComponent) {
+    _inherits(ResponseBlock, _React$PureComponent);
+
+    function ResponseBlock() {
+        _classCallCheck(this, ResponseBlock);
+
+        return _possibleConstructorReturn(this, (ResponseBlock.__proto__ || Object.getPrototypeOf(ResponseBlock)).apply(this, arguments));
+    }
+
+    _createClass(ResponseBlock, [{
+        key: 'render',
+        value: function render() {
+            if (this.props.responseResult == null) {
+                return _react2.default.createElement(
+                    'div',
+                    { style: { width: '50%', float: 'left' } },
+                    _react2.default.createElement(
+                        'h3',
+                        null,
+                        'Реузьтат ответа'
+                    )
+                );
+            };
+            console.log(this.props.responseResult);
+            return _react2.default.createElement(
+                'div',
+                { style: { width: '50%', float: 'left' } },
+                _react2.default.createElement(
+                    'h3',
+                    null,
+                    'Реузьтат ответа'
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    JSON.stringify(this.props.responseResult)
+                )
+            );
+        }
+    }]);
+
+    return ResponseBlock;
+}(_react2.default.PureComponent);
+
+ResponseBlock.propTypes = {
+    responseResult: _propTypes2.default.object
+};
+exports.default = ResponseBlock;
 
 /***/ }),
 
