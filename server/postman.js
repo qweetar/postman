@@ -34,7 +34,7 @@ webserver.post('/try', async (req, res) => {
     });
 
     // const proxy_res = await isoFetch('http://localhost:4095' + tempMethod.url, {
-    const proxy_res = await isoFetch('http://46.101.125.193:4095/' + tempMethod.url, {
+    const proxy_res = await isoFetch('http://46.101.125.193:4095' + tempMethod.url, {
         method: tempMethod.method,
         headers: {
             'Content-Type': tempMethod.accept

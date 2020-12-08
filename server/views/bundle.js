@@ -463,7 +463,7 @@ var RequestBlock = function (_React$PureComponent) {
                 url: _this.state.urlField,
                 method: _this.state.method,
                 accept: _this.state.accept,
-                body: JSON.stringify(_this.state.body)
+                body: _this.state.body
             };
             console.log(req);
             if (_this.state.isCardChanged) {
