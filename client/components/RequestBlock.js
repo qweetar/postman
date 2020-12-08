@@ -40,7 +40,7 @@ class RequestBlock extends React.PureComponent {
             url: this.state.urlField,
             method: this.state.method,
             accept: this.state.accept,
-            body: JSON.stringify(this.state.body),
+            body: this.state.body,
         }
         console.log(req);
         if (this.state.isCardChanged) {
