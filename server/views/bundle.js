@@ -520,7 +520,7 @@ var Request = function (_React$PureComponent) {
             (0, _isomorphicFetch2.default)('/run', {
                 method: 'post',
                 headers: {
-                    'Content-Type': 'text/html'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             }).then(function (response) {

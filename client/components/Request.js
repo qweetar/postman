@@ -17,7 +17,7 @@ class Request extends React.PureComponent {
         isoFetch('/run', {
             method: 'post',
             headers: {
-                'Content-Type': 'text/html'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data),
         })

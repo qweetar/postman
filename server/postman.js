@@ -26,9 +26,16 @@ webserver.post('/run', function(req, res) {
         };
     };
     console.log(tempMethod.url);
-    isoFetch(tempMethod.url, {
+    let queryParams = {
+        'par1': tempMethod.headers[0].par1,
+        'par2': tempMethod.headers[1].par2,
+    }
+    isoFetch(tempMethod.url + '?par1=' + tempMethod.headers[0].par1 + '&par2=' + tempMethod.headers[1].par2, {
         method: tempMethod.method,
         headers: {
+            
+        },
+        params: {
             'par1': tempMethod.headers[0].par1,
             'par2': tempMethod.headers[1].par2,
         }
