@@ -81,10 +81,14 @@ class PostmanBlock extends React.PureComponent {
         let requestBlockCode = <RequestBlock cbrequestSent={this.requestSent} />
 
         return (
-            <div>
+            <div className="container d-grid gap-3">
+                <div className="row">
                 {requestBlockCode}
                 {responseBlockCode}
+                </div>
+                <div className="row">
                 {requestListCode}
+                </div>
             </div>
         );
     };

@@ -20,15 +20,14 @@ class RequestList extends React.PureComponent {
             id={request.id} 
             url={request.url} 
             method={request.method}
-            accept={request.accept}
             cbshowResponse={this.showResponse}
             />
         );
 
         return(
-            <div style={{width: '100%', float: 'right'}}>
-                <h3>Список сформированных запросов</h3>
-                <ul>
+            <div className='col'>
+                <h3 className='h3'>Список сформированных запросов</h3>
+                <ul className='list-group list-group-flush'>
                     {requestsCode}
                 </ul>
             </div>

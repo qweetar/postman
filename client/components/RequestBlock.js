@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isoFetch from 'isomorphic-fetch';
+import HeaderBlock from './HeaderBlock';
 
 class RequestBlock extends React.PureComponent {
 
@@ -12,7 +13,7 @@ class RequestBlock extends React.PureComponent {
         isCardChanged: false,
         urlField: null,
         method: null,
-        accept: null,
+        header: null,
         body: null,
     };
 
@@ -27,10 +28,6 @@ class RequestBlock extends React.PureComponent {
         this.setState({method: event.target.value});
     };
 
-    acceptFieldChange = (event) => {
-        this.setState({accept: event.target.value});
-    }
-
     bodyFieldChange = (event) => {
         this.setState({body: event.target.value});
     }
@@ -39,7 +36,7 @@ class RequestBlock extends React.PureComponent {
         let req = {
             url: this.state.urlField,
             method: this.state.method,
-            accept: this.state.accept,
+            headers: this.state.header,
             body: this.state.body,
         }
         console.log(req);
@@ -73,36 +70,39 @@ class RequestBlock extends React.PureComponent {
         console.log(errorMessage);
     };
 
+    headersFilled = (data) => {
+        this.setState({
+            headerNumFields: this.state.headerNumFields++,
+            header: data,
+        })
+    }
+
     render() {
-        
+        console.log("RequstBlock render");
+        let headerBlockCode = <HeaderBlock cbheadersFilled={this.headersFilled}/>
         return(
-            <div style={{width: '50%', float: 'left', margin: '0'}}>
-                <h3>{'Блок ввода данных запроса'}</h3>
+            <div className='col'>
+                <h3 className='h3'>{'Блок ввода данных запроса'}</h3>
                 <div>
-                    <div>
-                        <label>{'URL метода'}</label><br/>
-                        <input onChange={this.urlFieldChange}></input>
-                    </div><br/>
-                    <div>
-                        <select onChange={this.methodFieldChange}>
-                            <option value=''>{'Выберите HTTP метод'}</option>
+                    <div className='input-group mb-3'>
+                        <label className='input-group-text' htmlFor='inputGroupSelect01'>HTTP Method</label>
+                        <select className='form-select' id='inputGroupSelect01' onChange={this.methodFieldChange}>
+                            <option value=''>Выберите метод запроса...</option>
                             <option value='post'>{'POST'}</option>
                             <option value='get'>{'GET'}</option>
+                            <option value='put'>{'PUT'}</option>
                         </select>
-                    </div><br/>
-                    <div>
-                        <select onChange={this.acceptFieldChange}>
-                            <option value=''>{'Выберите Accept-type'}</option>
-                            <option value='application/json'>{'application/json'}</option>
-                            <option value='text/html'>{'text/html'}</option>
-                            <option value='application/xml'>{'application/xml'}</option>
-                        </select>
-                    </div><br/>
-                    <div>
-                        <label>Body параметры:</label><br/>
-                        <textarea onChange={this.bodyFieldChange} placeholder='{"name": "John", "surname": "Travolta"}' cols='30' rows='5'></textarea>
-                    </div><br/>
-                    <button onClick={this.sendRequest}>{'Отправить'}</button>
+                    </div>
+                    <div className='input-group mb-3'>
+                        <span className='input-group-text' id='inputGroup-sizing-default'>URL метода</span>
+                        <input className='form-control' type='text' aria-label='Sizing exapmle input' aria-describedby='inputGroup-sizing-default' onChange={this.urlFieldChange}></input>
+                    </div>
+                    {headerBlockCode}
+                    <div className='mb-3'>
+                        <label className='form-label h5' htmlFor='exampleFormControlTextarea1'>Параметры Body:</label><br/>
+                        <textarea className='form-control' onChange={this.bodyFieldChange} id='exampleFormControlTextarea1' placeholder='{"name": "John", "surname": "Travolta"}' rows='5'></textarea>
+                    </div>
+                    <button className='btn btn-primary btn-sm' onClick={this.sendRequest}>{'Отправить'}</button>
                 </div>
             </div>
         );

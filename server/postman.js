@@ -16,46 +16,42 @@ webserver.use(cors());
 
 const port = 4095;
 
-webserver.post('/try', async (req, res) => {
+webserver.post('/run', function(req, res) {
     let methods = require('./methods.json');
     let tempMethod = null;
+    console.log(req.body);
     for (let i = 0; i < methods.length; i++) {
         if (methods[i].id == req.body.id) {
             tempMethod = methods[i];
         };
     };
-
-    webserver.get(tempMethod.url , function(req, res) {
-        res.send(req.body);
-    });
-    
-    webserver.post(tempMethod.url , function(req, res) {
-        res.send(req.body);
-    });
-
-    // const proxy_res = await isoFetch('http://localhost:4095' + tempMethod.url, {
-    const proxy_res = await isoFetch('http://46.101.125.193:4095' + tempMethod.url, {
+    console.log(tempMethod.url);
+    isoFetch(tempMethod.url, {
         method: tempMethod.method,
         headers: {
-            'Content-Type': tempMethod.accept
+            'par1': tempMethod.headers[0].par1,
+            'par2': tempMethod.headers[1].par2,
         }
+        // body: JSON.stringify(tempMethod),
     })
     .then(response => {
         if(!response.ok) {
             throw new Error('fetch error ' + response.status);
         } else {
-        return response;
+        return response.text();
         }
     })
     .then (data => {
-        return data;
+        console.log(data);
+        res.send(data);
     })
     .catch(error => {
         console.log(error.message);
+        res.send(error.message);
     });
 
-    console.log(proxy_res);
-    res.status(200).send(proxy_res);
+    // console.log(proxy_res);
+    // res.send(proxy_res);
 });
 
 webserver.post('/request', function(req, res) {
@@ -81,9 +77,9 @@ function addMethods(newMethod) {
     if (!isThereMethod) {
         let tempMethod = {};
         tempMethod.id = methods.length + 1;
-        tempMethod.url = '/' + newMethod.url;
+        tempMethod.url = newMethod.url;
         tempMethod.method = newMethod.method;
-        tempMethod.accept = newMethod.accept;
+        tempMethod.headers = newMethod.headers;
         tempMethod.body = newMethod.body;
         methods.push(tempMethod);
     };

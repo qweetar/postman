@@ -17,9 +17,9 @@ class ResponseBlock extends React.PureComponent {
         };
         console.log(this.props.responseResult);
         return(
-            <div style={{width: '50%', float: 'left'}}>
-                <h3>{'Реузьтат ответа'}</h3>
-                <p>{JSON.stringify(this.props.responseResult)}</p>
+            <div className='col' >
+                <h3 className='h3'>{'Реузьтат ответа'}</h3>
+                <p className='h6'>{JSON.stringify(this.props.responseResult)}</p>
             </div>
         );
     }

@@ -115,6 +115,199 @@ _reactDom2.default.render(_react2.default.createElement(_PostmanBlock2.default, 
 
 /***/ }),
 
+/***/ "./client/components/Header.js":
+/*!*************************************!*\
+  !*** ./client/components/Header.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Header = function (_React$PureComponent) {
+    _inherits(Header, _React$PureComponent);
+
+    function Header() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, Header);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Header.__proto__ || Object.getPrototypeOf(Header)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+            isHeaderSent: false,
+            keyField: '',
+            valueField: ''
+        }, _this.keyFieldChange = function (event) {
+            _this.setState({ keyField: event.target.value });
+        }, _this.valueFieldChange = function (event) {
+            _this.setState({ valueField: event.target.value });
+        }, _this.checkFieldChange = function () {
+            var tempObj = {};
+            tempObj[_this.state.keyField] = _this.state.valueField;
+            _this.props.cbheaderFilled(tempObj);
+            _this.setState({ isHeaderSent: true });
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(Header, [{
+        key: 'render',
+        value: function render() {
+            // console.log("Header render");
+            return _react2.default.createElement(
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'col input-group mb-3' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'input-group-text' },
+                        _react2.default.createElement('input', { className: 'form-check-input', onChange: this.checkFieldChange, disabled: this.state.keyField == '' || this.state.valueField == '' || this.state.isHeaderSent, type: 'checkbox', value: '', 'aria-label': 'Checkbox for following text input' })
+                    ),
+                    _react2.default.createElement('input', { className: 'form-control', onChange: this.keyFieldChange, disabled: this.state.isHeaderSent, type: 'text', 'aria-label': 'Text input with checkbox' })
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'col' },
+                    _react2.default.createElement('input', { className: 'form-control', onChange: this.valueFieldChange, disabled: this.state.isHeaderSent, type: 'text' })
+                )
+            );
+        }
+    }]);
+
+    return Header;
+}(_react2.default.PureComponent);
+
+Header.propTypes = {
+    cbheaderFilled: _propTypes2.default.func.isRequired
+};
+exports.default = Header;
+
+/***/ }),
+
+/***/ "./client/components/HeaderBlock.js":
+/*!******************************************!*\
+  !*** ./client/components/HeaderBlock.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _Header = __webpack_require__(/*! ./Header */ "./client/components/Header.js");
+
+var _Header2 = _interopRequireDefault(_Header);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var HeaderBlock = function (_React$Component) {
+    _inherits(HeaderBlock, _React$Component);
+
+    function HeaderBlock() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, HeaderBlock);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = HeaderBlock.__proto__ || Object.getPrototypeOf(HeaderBlock)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+            header: [],
+            numFields: _this.props.numFields
+        }, _this.headerFilled = function (data) {
+            var tempArr = _this.state.header;
+            tempArr.push(data);
+            _this.setState({
+                header: tempArr
+            });
+            _this.props.cbheadersFilled(_this.state.header);
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(HeaderBlock, [{
+        key: 'render',
+        value: function render() {
+            // console.log("HeaderBlock render");
+            var headersCode = [];
+            for (var i = 0; i <= this.state.header.length; i++) {
+                headersCode.push(_react2.default.createElement(_Header2.default, { key: i, cbheaderFilled: this.headerFilled }));
+            }
+
+            return _react2.default.createElement(
+                _react.Fragment,
+                null,
+                _react2.default.createElement(
+                    'span',
+                    { className: 'h5' },
+                    'Headers'
+                ),
+                headersCode
+            );
+        }
+    }]);
+
+    return HeaderBlock;
+}(_react2.default.Component);
+
+HeaderBlock.propTypes = {
+    cbheadersFilled: _propTypes2.default.func.isRequired
+};
+exports.default = HeaderBlock;
+
+/***/ }),
+
 /***/ "./client/components/PostmanBlock.js":
 /*!*******************************************!*\
   !*** ./client/components/PostmanBlock.js ***!
@@ -246,10 +439,18 @@ var PostmanBlock = function (_React$PureComponent) {
 
             return _react2.default.createElement(
                 'div',
-                null,
-                requestBlockCode,
-                responseBlockCode,
-                requestListCode
+                { className: 'container d-grid gap-3' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    requestBlockCode,
+                    responseBlockCode
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    requestListCode
+                )
             );
         }
     }]);
@@ -314,17 +515,19 @@ var Request = function (_React$PureComponent) {
         }
 
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Request.__proto__ || Object.getPrototypeOf(Request)).call.apply(_ref, [this].concat(args))), _this), _this.tryRequest = function () {
-            (0, _isomorphicFetch2.default)('/try', {
+            var data = { id: _this.props.id };
+            console.log("Run requst # " + data.id);
+            (0, _isomorphicFetch2.default)('/run', {
                 method: 'post',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'text/html'
                 },
-                body: JSON.stringify({ id: _this.props.id })
+                body: JSON.stringify(data)
             }).then(function (response) {
                 if (!response.ok) {
                     throw new Error('fetch error ' + response.status);
                 } else {
-                    return response.json();
+                    return response.text();
                 }
             }).then(function (data) {
                 _this.fetchTryRequestSuccess(data);
@@ -343,36 +546,24 @@ var Request = function (_React$PureComponent) {
         value: function render() {
             return _react2.default.createElement(
                 'li',
-                null,
+                { className: 'list-group-item' },
                 _react2.default.createElement(
                     'span',
-                    null,
+                    { className: 'h6' },
                     'URL \u0437\u0430\u043F\u0440\u043E\u0441\u0430: '
                 ),
                 this.props.url,
                 _react2.default.createElement(
                     'span',
-                    null,
+                    { className: 'h6' },
                     ' HTTP \u043C\u0435\u0442\u043E\u0434: '
                 ),
                 this.props.method.toUpperCase(),
                 _react2.default.createElement(
-                    'span',
-                    null,
-                    ' Content-Type: '
-                ),
-                this.props.accept,
-                _react2.default.createElement('br', null),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(
-                        'button',
-                        { onClick: this.tryRequest },
-                        '\u0412\u044B\u043F\u043E\u043B\u043D\u0438\u0442\u044C \u0437\u0430\u043F\u0440\u043E\u0441'
-                    )
-                ),
-                _react2.default.createElement('br', null)
+                    'button',
+                    { className: 'btn btn-outline-success btn-sm float-end', onClick: this.tryRequest },
+                    '\u0412\u044B\u043F\u043E\u043B\u043D\u0438\u0442\u044C \u0437\u0430\u043F\u0440\u043E\u0441'
+                )
             );
         }
     }]);
@@ -384,7 +575,6 @@ Request.propTypes = {
     id: _propTypes2.default.number.isRequired,
     url: _propTypes2.default.string.isRequired,
     method: _propTypes2.default.string.isRequired,
-    accept: _propTypes2.default.string.isRequired,
     cbshowResponse: _propTypes2.default.func.isRequired
 };
 exports.default = Request;
@@ -419,6 +609,10 @@ var _isomorphicFetch = __webpack_require__(/*! isomorphic-fetch */ "./node_modul
 
 var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
+var _HeaderBlock = __webpack_require__(/*! ./HeaderBlock */ "./client/components/HeaderBlock.js");
+
+var _HeaderBlock2 = _interopRequireDefault(_HeaderBlock);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -445,7 +639,7 @@ var RequestBlock = function (_React$PureComponent) {
             isCardChanged: false,
             urlField: null,
             method: null,
-            accept: null,
+            header: null,
             body: null
         }, _this.urlFieldChange = function (event) {
             if (event.target.value != "") {
@@ -454,15 +648,13 @@ var RequestBlock = function (_React$PureComponent) {
             _this.setState({ isCardChanged: true });
         }, _this.methodFieldChange = function (event) {
             _this.setState({ method: event.target.value });
-        }, _this.acceptFieldChange = function (event) {
-            _this.setState({ accept: event.target.value });
         }, _this.bodyFieldChange = function (event) {
             _this.setState({ body: event.target.value });
         }, _this.sendRequest = function () {
             var req = {
                 url: _this.state.urlField,
                 method: _this.state.method,
-                accept: _this.state.accept,
+                headers: _this.state.header,
                 body: _this.state.body
             };
             console.log(req);
@@ -487,19 +679,25 @@ var RequestBlock = function (_React$PureComponent) {
             _this.props.cbrequestSent(loadedData);
         }, _this.fetchError = function (errorMessage) {
             console.log(errorMessage);
+        }, _this.headersFilled = function (data) {
+            _this.setState({
+                headerNumFields: _this.state.headerNumFields++,
+                header: data
+            });
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(RequestBlock, [{
         key: 'render',
         value: function render() {
-
+            console.log("RequstBlock render");
+            var headerBlockCode = _react2.default.createElement(_HeaderBlock2.default, { cbheadersFilled: this.headersFilled });
             return _react2.default.createElement(
                 'div',
-                { style: { width: '50%', float: 'left', margin: '0' } },
+                { className: 'col' },
                 _react2.default.createElement(
                     'h3',
-                    null,
+                    { className: 'h3' },
                     'Блок ввода данных запроса'
                 ),
                 _react2.default.createElement(
@@ -507,26 +705,19 @@ var RequestBlock = function (_React$PureComponent) {
                     null,
                     _react2.default.createElement(
                         'div',
-                        null,
+                        { className: 'input-group mb-3' },
                         _react2.default.createElement(
                             'label',
-                            null,
-                            'URL метода'
+                            { className: 'input-group-text', htmlFor: 'inputGroupSelect01' },
+                            'HTTP Method'
                         ),
-                        _react2.default.createElement('br', null),
-                        _react2.default.createElement('input', { onChange: this.urlFieldChange })
-                    ),
-                    _react2.default.createElement('br', null),
-                    _react2.default.createElement(
-                        'div',
-                        null,
                         _react2.default.createElement(
                             'select',
-                            { onChange: this.methodFieldChange },
+                            { className: 'form-select', id: 'inputGroupSelect01', onChange: this.methodFieldChange },
                             _react2.default.createElement(
                                 'option',
                                 { value: '' },
-                                'Выберите HTTP метод'
+                                '\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043C\u0435\u0442\u043E\u0434 \u0437\u0430\u043F\u0440\u043E\u0441\u0430...'
                             ),
                             _react2.default.createElement(
                                 'option',
@@ -537,54 +728,39 @@ var RequestBlock = function (_React$PureComponent) {
                                 'option',
                                 { value: 'get' },
                                 'GET'
+                            ),
+                            _react2.default.createElement(
+                                'option',
+                                { value: 'put' },
+                                'PUT'
                             )
                         )
                     ),
-                    _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'div',
-                        null,
+                        { className: 'input-group mb-3' },
                         _react2.default.createElement(
-                            'select',
-                            { onChange: this.acceptFieldChange },
-                            _react2.default.createElement(
-                                'option',
-                                { value: '' },
-                                'Выберите Accept-type'
-                            ),
-                            _react2.default.createElement(
-                                'option',
-                                { value: 'application/json' },
-                                'application/json'
-                            ),
-                            _react2.default.createElement(
-                                'option',
-                                { value: 'text/html' },
-                                'text/html'
-                            ),
-                            _react2.default.createElement(
-                                'option',
-                                { value: 'application/xml' },
-                                'application/xml'
-                            )
-                        )
+                            'span',
+                            { className: 'input-group-text', id: 'inputGroup-sizing-default' },
+                            'URL \u043C\u0435\u0442\u043E\u0434\u0430'
+                        ),
+                        _react2.default.createElement('input', { className: 'form-control', type: 'text', 'aria-label': 'Sizing exapmle input', 'aria-describedby': 'inputGroup-sizing-default', onChange: this.urlFieldChange })
                     ),
-                    _react2.default.createElement('br', null),
+                    headerBlockCode,
                     _react2.default.createElement(
                         'div',
-                        null,
+                        { className: 'mb-3' },
                         _react2.default.createElement(
                             'label',
-                            null,
-                            'Body \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B:'
+                            { className: 'form-label h5', htmlFor: 'exampleFormControlTextarea1' },
+                            '\u041F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B Body:'
                         ),
                         _react2.default.createElement('br', null),
-                        _react2.default.createElement('textarea', { onChange: this.bodyFieldChange, placeholder: '{"name": "John", "surname": "Travolta"}', cols: '30', rows: '5' })
+                        _react2.default.createElement('textarea', { className: 'form-control', onChange: this.bodyFieldChange, id: 'exampleFormControlTextarea1', placeholder: '{"name": "John", "surname": "Travolta"}', rows: '5' })
                     ),
-                    _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'button',
-                        { onClick: this.sendRequest },
+                        { className: 'btn btn-primary btn-sm', onClick: this.sendRequest },
                         'Отправить'
                     )
                 )
@@ -668,22 +844,21 @@ var RequestList = function (_React$PureComponent) {
                     id: request.id,
                     url: request.url,
                     method: request.method,
-                    accept: request.accept,
                     cbshowResponse: _this2.showResponse
                 });
             });
 
             return _react2.default.createElement(
                 'div',
-                { style: { width: '100%', float: 'right' } },
+                { className: 'col' },
                 _react2.default.createElement(
                     'h3',
-                    null,
+                    { className: 'h3' },
                     '\u0421\u043F\u0438\u0441\u043E\u043A \u0441\u0444\u043E\u0440\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u044B\u0445 \u0437\u0430\u043F\u0440\u043E\u0441\u043E\u0432'
                 ),
                 _react2.default.createElement(
                     'ul',
-                    null,
+                    { className: 'list-group list-group-flush' },
                     requestsCode
                 )
             );
@@ -759,15 +934,15 @@ var ResponseBlock = function (_React$PureComponent) {
             console.log(this.props.responseResult);
             return _react2.default.createElement(
                 'div',
-                { style: { width: '50%', float: 'left' } },
+                { className: 'col' },
                 _react2.default.createElement(
                     'h3',
-                    null,
+                    { className: 'h3' },
                     'Реузьтат ответа'
                 ),
                 _react2.default.createElement(
                     'p',
-                    null,
+                    { className: 'h6' },
                     JSON.stringify(this.props.responseResult)
                 )
             );

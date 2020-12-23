@@ -8,23 +8,24 @@ class Request extends React.PureComponent {
         id: PropTypes.number.isRequired,
         url: PropTypes.string.isRequired,
         method: PropTypes.string.isRequired,
-        accept: PropTypes.string.isRequired, 
         cbshowResponse: PropTypes.func.isRequired,
     };
 
     tryRequest = () => {
-        isoFetch('/try', {
+        let data = {id: this.props.id};
+        console.log("Run requst # " + data.id);
+        isoFetch('/run', {
             method: 'post',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'text/html'
             },
-            body: JSON.stringify({id: this.props.id}),
+            body: JSON.stringify(data),
         })
         .then(response => {
             if(!response.ok) {
                 throw new Error('fetch error ' + response.status);
             } else {
-                return response.json();
+                return response.text();
             }
         })
         .then(data => {
@@ -48,13 +49,10 @@ class Request extends React.PureComponent {
 
     render() {
         return(
-            <li>
-                <span>URL запроса: </span>{this.props.url}
-                <span> HTTP метод: </span>{this.props.method.toUpperCase()}
-                <span> Content-Type: </span>{this.props.accept}<br/>
-                <div>
-                <button onClick={this.tryRequest}>Выполнить запрос</button>
-                </div><br/>
+            <li className='list-group-item'>
+                <span className='h6'>URL запроса: </span>{this.props.url}
+                <span className='h6'> HTTP метод: </span>{this.props.method.toUpperCase()}
+                <button className='btn btn-outline-success btn-sm float-end' onClick={this.tryRequest}>Выполнить запрос</button>
             </li>
         );
     }
