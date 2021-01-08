@@ -10,15 +10,15 @@ class ResponseBlock extends React.PureComponent {
     render() {
         if (this.props.responseResult == null) {
             return ( 
-            <div style={{width: '50%', float: 'left'}}>
-            <h3>{'Реузьтат ответа'}</h3>
+            <div className='col'>
+            <h3 className='h3'>{'Результат ответа'}</h3>
             </div>
             );
         };
         console.log(this.props.responseResult);
         return(
             <div className='col' >
-                <h3 className='h3'>{'Реузьтат ответа'}</h3>
+                <h3 className='h3'>{'Результат ответа'}</h3>
                 <p className='h6'>{JSON.stringify(this.props.responseResult)}</p>
             </div>
         );

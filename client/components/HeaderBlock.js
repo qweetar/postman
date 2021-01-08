@@ -9,15 +9,16 @@ class HeaderBlock extends React.Component {
     };
 
     state = {
-        header: [],
-        numFields: this.props.numFields,
+        header: {},
+        numFields: 0,
     };
 
-    headerFilled = (data) => {
-        let tempArr = this.state.header;
-        tempArr.push(data);
+    headerFilled = (keyField, keyValue) => {
+        let tempObj = this.state.header;
+        tempObj[keyField] = keyValue;
         this.setState({
-            header: tempArr,
+            header: tempObj,
+            numFields: this.state.numFields++,
         });
         this.props.cbheadersFilled(this.state.header);
     }
@@ -26,7 +27,7 @@ class HeaderBlock extends React.Component {
     render() {
         // console.log("HeaderBlock render");
         let headersCode = [];
-            for (let i = 0; i <= this.state.header.length; i++) {
+            for (let i = 0; i <= this.state.numFields; i++) {
                 headersCode.push(
                     <Header key={i} cbheaderFilled={this.headerFilled}/>
                 );
@@ -35,6 +36,7 @@ class HeaderBlock extends React.Component {
         return(
             <Fragment>
                 <span className='h5'>Headers</span>
+                <p>Для фиксации введенных данных поставьте галочку</p>
                 {headersCode}
             </Fragment>
         );

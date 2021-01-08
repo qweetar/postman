@@ -170,9 +170,9 @@ var Header = function (_React$PureComponent) {
         }, _this.valueFieldChange = function (event) {
             _this.setState({ valueField: event.target.value });
         }, _this.checkFieldChange = function () {
-            var tempObj = {};
-            tempObj[_this.state.keyField] = _this.state.valueField;
-            _this.props.cbheaderFilled(tempObj);
+            // let tempObj = {};
+            // tempObj[this.state.keyField] = this.state.valueField;
+            _this.props.cbheaderFilled(_this.state.keyField, _this.state.valueField);
             _this.setState({ isHeaderSent: true });
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
@@ -264,13 +264,14 @@ var HeaderBlock = function (_React$Component) {
         }
 
         return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = HeaderBlock.__proto__ || Object.getPrototypeOf(HeaderBlock)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-            header: [],
-            numFields: _this.props.numFields
-        }, _this.headerFilled = function (data) {
-            var tempArr = _this.state.header;
-            tempArr.push(data);
+            header: {},
+            numFields: 0
+        }, _this.headerFilled = function (keyField, keyValue) {
+            var tempObj = _this.state.header;
+            tempObj[keyField] = keyValue;
             _this.setState({
-                header: tempArr
+                header: tempObj,
+                numFields: _this.state.numFields++
             });
             _this.props.cbheadersFilled(_this.state.header);
         }, _temp), _possibleConstructorReturn(_this, _ret);
@@ -281,7 +282,7 @@ var HeaderBlock = function (_React$Component) {
         value: function render() {
             // console.log("HeaderBlock render");
             var headersCode = [];
-            for (var i = 0; i <= this.state.header.length; i++) {
+            for (var i = 0; i <= this.state.numFields; i++) {
                 headersCode.push(_react2.default.createElement(_Header2.default, { key: i, cbheaderFilled: this.headerFilled }));
             }
 
@@ -292,6 +293,11 @@ var HeaderBlock = function (_React$Component) {
                     'span',
                     { className: 'h5' },
                     'Headers'
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    '\u0414\u043B\u044F \u0444\u0438\u043A\u0441\u0430\u0446\u0438\u0438 \u0432\u0432\u0435\u0434\u0435\u043D\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445 \u043F\u043E\u0441\u0442\u0430\u0432\u044C\u0442\u0435 \u0433\u0430\u043B\u043E\u0447\u043A\u0443'
                 ),
                 headersCode
             );
@@ -464,6 +470,207 @@ exports.default = PostmanBlock;
 
 /***/ }),
 
+/***/ "./client/components/Query.js":
+/*!************************************!*\
+  !*** ./client/components/Query.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Query = function (_React$PureComponent) {
+    _inherits(Query, _React$PureComponent);
+
+    function Query() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, Query);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Query.__proto__ || Object.getPrototypeOf(Query)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+            isQuerySent: false,
+            keyField: '',
+            valueField: ''
+        }, _this.keyFieldChange = function (event) {
+            _this.setState({ keyField: event.target.value });
+        }, _this.valueFieldChange = function (event) {
+            _this.setState({ valueField: event.target.value });
+        }, _this.checkFieldChange = function () {
+            // let tempObj = {};
+            // tempObj[this.state.keyField] = this.state.valueField;
+            // this.props.cbqueryFilled(tempObj);
+            var tempQuery = '';
+            tempQuery = _this.state.keyField + '=' + _this.state.valueField;
+            _this.props.cbqueryFilled(tempQuery);
+            _this.setState({ isQuerySent: true });
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(Query, [{
+        key: 'render',
+        value: function render() {
+            // console.log("Header render");
+            return _react2.default.createElement(
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'col input-group mb-3' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'input-group-text' },
+                        _react2.default.createElement('input', { className: 'form-check-input', onChange: this.checkFieldChange, disabled: this.state.keyField == '' || this.state.valueField == '' || this.state.isQuerySent, type: 'checkbox', value: '', 'aria-label': 'Checkbox for following text input' })
+                    ),
+                    _react2.default.createElement('input', { className: 'form-control', onChange: this.keyFieldChange, disabled: this.state.isQuerySent, type: 'text', 'aria-label': 'Text input with checkbox' })
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'col' },
+                    _react2.default.createElement('input', { className: 'form-control', onChange: this.valueFieldChange, disabled: this.state.isQuerySent, type: 'text' })
+                )
+            );
+        }
+    }]);
+
+    return Query;
+}(_react2.default.PureComponent);
+
+Query.propTypes = {
+    cbqueryFilled: _propTypes2.default.func.isRequired
+};
+exports.default = Query;
+
+/***/ }),
+
+/***/ "./client/components/QueryBlock.js":
+/*!*****************************************!*\
+  !*** ./client/components/QueryBlock.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _Query = __webpack_require__(/*! ./Query */ "./client/components/Query.js");
+
+var _Query2 = _interopRequireDefault(_Query);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var QueryBlock = function (_React$Component) {
+    _inherits(QueryBlock, _React$Component);
+
+    function QueryBlock() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, QueryBlock);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = QueryBlock.__proto__ || Object.getPrototypeOf(QueryBlock)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+            query: [],
+            numFields: _this.props.numFields
+        }, _this.queryFilled = function (data) {
+            var tempArr = _this.state.query;
+            tempArr.push(data);
+            _this.setState({
+                query: tempArr
+            });
+            _this.props.cbqueriesFilled(_this.state.query);
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(QueryBlock, [{
+        key: 'render',
+        value: function render() {
+            // console.log("HeaderBlock render");
+            var queriesCode = [];
+            for (var i = 0; i <= this.state.query.length; i++) {
+                queriesCode.push(_react2.default.createElement(_Query2.default, { key: i, cbqueryFilled: this.queryFilled }));
+            }
+
+            return _react2.default.createElement(
+                _react.Fragment,
+                null,
+                _react2.default.createElement(
+                    'span',
+                    { className: 'h5' },
+                    'Query Params '
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    '\u0414\u043B\u044F \u0444\u0438\u043A\u0441\u0430\u0446\u0438\u0438 \u0432\u0432\u0435\u0434\u0435\u043D\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445 \u043F\u043E\u0441\u0442\u0430\u0432\u044C\u0442\u0435 \u0433\u0430\u043B\u043E\u0447\u043A\u0443'
+                ),
+                queriesCode
+            );
+        }
+    }]);
+
+    return QueryBlock;
+}(_react2.default.Component);
+
+QueryBlock.propTypes = {
+    cbqueriesFilled: _propTypes2.default.func.isRequired
+};
+exports.default = QueryBlock;
+
+/***/ }),
+
 /***/ "./client/components/Request.js":
 /*!**************************************!*\
   !*** ./client/components/Request.js ***!
@@ -613,6 +820,10 @@ var _HeaderBlock = __webpack_require__(/*! ./HeaderBlock */ "./client/components
 
 var _HeaderBlock2 = _interopRequireDefault(_HeaderBlock);
 
+var _QueryBlock = __webpack_require__(/*! ./QueryBlock */ "./client/components/QueryBlock.js");
+
+var _QueryBlock2 = _interopRequireDefault(_QueryBlock);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -640,7 +851,8 @@ var RequestBlock = function (_React$PureComponent) {
             urlField: null,
             method: null,
             header: null,
-            body: null
+            body: null,
+            query: null
         }, _this.urlFieldChange = function (event) {
             if (event.target.value != "") {
                 _this.setState({ urlField: event.target.value });
@@ -654,6 +866,7 @@ var RequestBlock = function (_React$PureComponent) {
             var req = {
                 url: _this.state.urlField,
                 method: _this.state.method,
+                query: _this.state.query,
                 headers: _this.state.header,
                 body: _this.state.body
             };
@@ -684,6 +897,11 @@ var RequestBlock = function (_React$PureComponent) {
                 headerNumFields: _this.state.headerNumFields++,
                 header: data
             });
+        }, _this.queriesFilled = function (data) {
+            _this.setState({
+                queryNumFields: _this.state.queryNumFields++,
+                query: data
+            });
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
@@ -692,6 +910,7 @@ var RequestBlock = function (_React$PureComponent) {
         value: function render() {
             console.log("RequstBlock render");
             var headerBlockCode = _react2.default.createElement(_HeaderBlock2.default, { cbheadersFilled: this.headersFilled });
+            var queryBlockCode = _react2.default.createElement(_QueryBlock2.default, { cbqueriesFilled: this.queriesFilled });
             return _react2.default.createElement(
                 'div',
                 { className: 'col' },
@@ -728,11 +947,6 @@ var RequestBlock = function (_React$PureComponent) {
                                 'option',
                                 { value: 'get' },
                                 'GET'
-                            ),
-                            _react2.default.createElement(
-                                'option',
-                                { value: 'put' },
-                                'PUT'
                             )
                         )
                     ),
@@ -746,6 +960,7 @@ var RequestBlock = function (_React$PureComponent) {
                         ),
                         _react2.default.createElement('input', { className: 'form-control', type: 'text', 'aria-label': 'Sizing exapmle input', 'aria-describedby': 'inputGroup-sizing-default', onChange: this.urlFieldChange })
                     ),
+                    queryBlockCode,
                     headerBlockCode,
                     _react2.default.createElement(
                         'div',
@@ -923,11 +1138,11 @@ var ResponseBlock = function (_React$PureComponent) {
             if (this.props.responseResult == null) {
                 return _react2.default.createElement(
                     'div',
-                    { style: { width: '50%', float: 'left' } },
+                    { className: 'col' },
                     _react2.default.createElement(
                         'h3',
-                        null,
-                        'Реузьтат ответа'
+                        { className: 'h3' },
+                        'Результат ответа'
                     )
                 );
             };
@@ -938,7 +1153,7 @@ var ResponseBlock = function (_React$PureComponent) {
                 _react2.default.createElement(
                     'h3',
                     { className: 'h3' },
-                    'Реузьтат ответа'
+                    'Результат ответа'
                 ),
                 _react2.default.createElement(
                     'p',

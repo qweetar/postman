@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import isoFetch from 'isomorphic-fetch';
 import HeaderBlock from './HeaderBlock';
+import QueryBlock from './QueryBlock';
 
 class RequestBlock extends React.PureComponent {
 
@@ -15,6 +16,7 @@ class RequestBlock extends React.PureComponent {
         method: null,
         header: null,
         body: null,
+        query: null,
     };
 
     urlFieldChange = (event) => {
@@ -36,6 +38,7 @@ class RequestBlock extends React.PureComponent {
         let req = {
             url: this.state.urlField,
             method: this.state.method,
+            query: this.state.query,
             headers: this.state.header,
             body: this.state.body,
         }
@@ -77,9 +80,17 @@ class RequestBlock extends React.PureComponent {
         })
     }
 
+    queriesFilled = (data) => {
+        this.setState({
+            queryNumFields: this.state.queryNumFields++,
+            query: data,
+        })
+    }
+
     render() {
         console.log("RequstBlock render");
         let headerBlockCode = <HeaderBlock cbheadersFilled={this.headersFilled}/>
+        let queryBlockCode = <QueryBlock cbqueriesFilled={this.queriesFilled}/>
         return(
             <div className='col'>
                 <h3 className='h3'>{'Блок ввода данных запроса'}</h3>
@@ -90,13 +101,14 @@ class RequestBlock extends React.PureComponent {
                             <option value=''>Выберите метод запроса...</option>
                             <option value='post'>{'POST'}</option>
                             <option value='get'>{'GET'}</option>
-                            <option value='put'>{'PUT'}</option>
+                            {/* <option value='put'>{'PUT'}</option> */}
                         </select>
                     </div>
                     <div className='input-group mb-3'>
                         <span className='input-group-text' id='inputGroup-sizing-default'>URL метода</span>
                         <input className='form-control' type='text' aria-label='Sizing exapmle input' aria-describedby='inputGroup-sizing-default' onChange={this.urlFieldChange}></input>
                     </div>
+                    {queryBlockCode}
                     {headerBlockCode}
                     <div className='mb-3'>
                         <label className='form-label h5' htmlFor='exampleFormControlTextarea1'>Параметры Body:</label><br/>

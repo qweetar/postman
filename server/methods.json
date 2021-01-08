@@ -1,36 +1,41 @@
 [
   {
-    "id": 0,
-    "url": "/test",
-    "method": "get",
-    "accept": "text/html"
-  },
-  {
     "id": 2,
-    "url": "//travolta",
-    "method": "post",
-    "headers": [
-      {
-        "Content-type": "text/html"
-      },
-      {
-        "Content-Length": "13"
-      }
-    ],
-    "body": "{\"name\": \"John\", \"surname\": \"Travolta\"}"
-  },
-  {
-    "id": 3,
     "url": "http://nodearch.e-learning.by:3533/service1",
     "method": "get",
-    "headers": [
-      {
-        "par1": "5"
-      },
-      {
-        "par2": "sss"
-      }
+    "query": [
+      "par1=555",
+      "par2=mmm"
     ],
+    "headers": null,
+    "body": null
+  },
+  {
+    "id": 4,
+    "url": "http://46.101.125.193:3195/download",
+    "method": "post",
+    "query": null,
+    "headers": {
+      "Accept": "application/json"
+    },
+    "body": null
+  },
+  {
+    "id": 5,
+    "url": "http://46.101.125.193:3195/vote",
+    "method": "post",
+    "query": null,
+    "headers": null,
+    "body": "{\"question\": \"react\", \"code\": 1}"
+  },
+  {
+    "id": 6,
+    "url": "http://46.101.125.193:3195/variants",
+    "method": "post",
+    "query": null,
+    "headers": {
+      "Accept": "application/json"
+    },
     "body": null
   }
 ]

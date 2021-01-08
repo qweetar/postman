@@ -26,21 +26,33 @@ webserver.post('/run', function(req, res) {
         };
     };
     console.log(tempMethod.url);
-    let queryParams = {
-        'par1': tempMethod.headers[0].par1,
-        'par2': tempMethod.headers[1].par2,
-    }
-    isoFetch(tempMethod.url + '?par1=' + tempMethod.headers[0].par1 + '&par2=' + tempMethod.headers[1].par2, {
-        method: tempMethod.method,
-        headers: {
-            
-        },
-        params: {
-            'par1': tempMethod.headers[0].par1,
-            'par2': tempMethod.headers[1].par2,
+
+    let urlParams = tempMethod.url;
+    if (tempMethod.query != null) {
+        urlParams = urlParams + '?';
+        for (let i = 0; i < tempMethod.query.length; i++) {
+            if (i == 0) {
+                urlParams = urlParams + tempMethod.query[i];
+            } else {
+                urlParams = urlParams + '&' + tempMethod.query[i];
+            }
         }
-        // body: JSON.stringify(tempMethod),
-    })
+    };
+
+    
+    let requestParams = {};
+    requestParams.method = tempMethod.method;
+
+    if (tempMethod.headers != null) {
+        requestParams.headers = tempMethod.headers;
+    };
+    
+    if (tempMethod.body != null) {
+        requestParams.body = tempMethod.body;
+    };
+
+    isoFetch(urlParams, requestParams
+    )
     .then(response => {
         if(!response.ok) {
             throw new Error('fetch error ' + response.status);
@@ -68,7 +80,7 @@ webserver.post('/request', function(req, res) {
 });
 
 webserver.get('/reqlist', function(req, res) {
-    console.log('/reqlist is there');
+    // console.log('/reqlist is there');
     let methods = require('./methods.json');
     res.json(methods);
 });
@@ -86,6 +98,7 @@ function addMethods(newMethod) {
         tempMethod.id = methods.length + 1;
         tempMethod.url = newMethod.url;
         tempMethod.method = newMethod.method;
+        tempMethod.query = newMethod.query;
         tempMethod.headers = newMethod.headers;
         tempMethod.body = newMethod.body;
         methods.push(tempMethod);

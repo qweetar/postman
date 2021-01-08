@@ -22,9 +22,9 @@ class Header extends React.PureComponent {
     };
 
     checkFieldChange = () => {
-            let tempObj = {};
-            tempObj[this.state.keyField] = this.state.valueField;
-            this.props.cbheaderFilled(tempObj);
+            // let tempObj = {};
+            // tempObj[this.state.keyField] = this.state.valueField;
+            this.props.cbheaderFilled(this.state.keyField, this.state.valueField);
             this.setState({isHeaderSent: true});
     };
 
